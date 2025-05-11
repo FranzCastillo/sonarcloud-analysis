@@ -28,7 +28,7 @@ jobs:
           restore-keys: ${{ runner.os }}-sonar
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v1
+        uses: SonarSource/sonarcloud-github-action@v2
         with:
           args: >
             -Dsonar.organization=franzcastillo
@@ -36,5 +36,6 @@ jobs:
             -Dsonar.sources=.
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          JAVA_HOME: /usr/lib/jvm/java-17-temurin
+          JAVA_HOME: /usr/lib/jvm/temurin-17-jdk-amd64
+
 
