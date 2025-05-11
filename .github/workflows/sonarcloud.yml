@@ -34,5 +34,5 @@ jobs:
         with:
           args: >
             -Dsonar.organization=sonarcloud-analysis
-            -Dsonar.projectKey=franzcastillo
+            -Dsonar.projectKey=FranzCastillo_sonarcloud-analysis
             -Dsonar.sources=.
