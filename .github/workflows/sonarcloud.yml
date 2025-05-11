@@ -32,7 +32,7 @@ jobs:
         with:
           args: >
             -Dsonar.organization=franzcastillo
-            -Dsonar.projectKey=sonarcloud-analysis
+            -Dsonar.projectKey=FranzCastillo_sonarcloud-analysis
             -Dsonar.sources=.
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
