@@ -1,45 +1,86 @@
 # main.py
 
 import os
-import sys
-import math  # Importación no utilizada
+import json
+import sqlite3
+import hashlib
+import logging
 
-def calcular_area_circulo(radio):
-    if radio < 0:
-        return None
-    area = math.pi * radio ** 2
-    return area
+# Configuración incorrecta del logging (nivel de DEBUG en producción)
+logging.basicConfig(level=logging.DEBUG)
 
-def obtener_nombre_usuario():
-    nombre = input("Ingrese su nombre: ")
-    if nombre == "":
-        print("Nombre no proporcionado")
+# Hardcoded credentials (problema de seguridad)
+DB_PASSWORD = "1234"
+
+# Función muy larga y compleja
+def iniciar_aplicacion():
+    logging.debug("Iniciando aplicación")
+    usuario = input("Ingrese su nombre de usuario: ")
+    contrasena = input("Ingrese su contraseña: ")
+
+    if usuario == "admin" and contrasena == "admin":  # credenciales quemadas
+        print("Bienvenido admin")
+    elif usuario == "":
+        print("Nombre de usuario vacío")
     else:
-        print("Hola, " + nombre)
-    return nombre
+        print("Usuario incorrecto")
 
-def procesar_datos(datos):
-    resultado = []
-    for i in range(len(datos)):
-        if datos[i] % 2 == 0:
-            resultado.append(datos[i] * 2)
-        else:
-            resultado.append(datos[i] + 1)
-    return resultado
+    # SQL sin sanitizar (inyección de SQL posible)
+    conn = sqlite3.connect('usuarios.db')
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT * FROM usuarios WHERE nombre = '" + usuario + "';")
+        resultado = cursor.fetchall()
+        for row in resultado:
+            print("Usuario:", row[0])
+    except:
+        print("Error al consultar la base de datos")
+        pass
 
-def main():
-    radio = -5
-    area = calcular_area_circulo(radio)
-    print("Área del círculo:", area)
+    # Código duplicado
+    if usuario == "root":
+        print("Root user")
+    if usuario == "root":
+        print("Root user")
 
-    nombre = obtener_nombre_usuario()
+    # Profundidad excesiva de anidamiento
+    for i in range(5):
+        for j in range(5):
+            if i == j:
+                if i + j > 3:
+                    if i % 2 == 0:
+                        if j % 2 == 1:
+                            print(f"i:{i}, j:{j} - patrón especial")
 
-    datos = [1, 2, 3, 4, 5]
-    resultado = procesar_datos(datos)
-    print("Datos procesados:", resultado)
+    # Variable no utilizada
+    datos_innecesarios = [1, 2, 3, 4]
 
-    # Código inalcanzable
-    return
-    print("Este mensaje nunca se mostrará")
+    # Llamada insegura a eval (vulnerabilidad crítica)
+    comando = input("Ingrese comando para eval: ")
+    try:
+        resultado = eval(comando)
+        print("Resultado:", resultado)
+    except Exception as e:
+        print("Error al ejecutar eval:", e)
 
-main()
+    # Archivos sin manejo adecuado de errores
+    with open("usuarios.txt", "w") as f:
+        f.write("usuario: " + usuario + "\n")
+
+    # Uso de hash inseguro
+    hash_contrasena = hashlib.md5(contrasena.encode()).hexdigest()
+    print("Hash MD5 (inseguro):", hash_contrasena)
+
+def funcion_mal_nombrada():
+    a = 5
+    b = 10
+    c = 0
+    for i in range(10):
+        c = a * b + i
+        print("Resultado:", c)
+
+def repetir():
+    repetir()
+    # llamada recursiva sin condición de parada
+
+iniciar_aplicacion()
