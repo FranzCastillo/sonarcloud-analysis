@@ -1,44 +1,45 @@
+# main.py
+
 import os
+import sys
+import math  # Importación no utilizada
 
-
-def read_file(file_path):
-    try:
-        with open(file_path, 'r') as file:
-            data = file.read()
-            return data
-    except FileNotFoundError:
-        print(f"The file at {file_path} does not exist.")
+def calcular_area_circulo(radio):
+    if radio < 0:
         return None
+    area = math.pi * radio ** 2
+    return area
 
+def obtener_nombre_usuario():
+    nombre = input("Ingrese su nombre: ")
+    if nombre == "":
+        print("Nombre no proporcionado")
+    else:
+        print("Hola, " + nombre)
+    return nombre
 
-def write_file(file_path, data):
-    with open(file_path, 'w') as file:
-        file.write(data)
-
-
-def get_user_input():
-    user_input = input("Enter some text: ")
-    return user_input
-
-
-def process_data(data):
-    processed_data = data.lower()
-    return processed_data
-
+def procesar_datos(datos):
+    resultado = []
+    for i in range(len(datos)):
+        if datos[i] % 2 == 0:
+            resultado.append(datos[i] * 2)
+        else:
+            resultado.append(datos[i] + 1)
+    return resultado
 
 def main():
-    file_path = "example.txt"
-    # Reading from a file
-    data = read_file(file_path)
-    if data is None:
-        return
+    radio = -5
+    area = calcular_area_circulo(radio)
+    print("Área del círculo:", area)
 
-    # Processing data
-    processed_data = process_data(data)
-    print(f"Processed Data: {processed_data}")
-    # Getting user input and writing to a file
-    user_input = get_user_input()
-    write_file(file_path, user_input)
+    nombre = obtener_nombre_usuario()
 
-if __name__ == '__main__':
-    main()
+    datos = [1, 2, 3, 4, 5]
+    resultado = procesar_datos(datos)
+    print("Datos procesados:", resultado)
+
+    # Código inalcanzable
+    return
+    print("Este mensaje nunca se mostrará")
+
+main()
